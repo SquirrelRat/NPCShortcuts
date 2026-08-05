@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Collections.Generic;
 using ExileCore;
 using ExileCore.PoEMemory;
-using ExileCore.PoEMemory.Elements;
-using ExileCore.PoEMemory.MemoryObjects;
 using SharpDX;
 using Vector2 = System.Numerics.Vector2;
 
@@ -19,51 +13,38 @@ public class NPCShortcuts : BaseSettingsPlugin<NPCShortcutsSettings>
         return true;
     }
 
-    public override void AreaChange(AreaInstance area)
-    {
-    }
-
-    public override Job Tick()
-    {
-        return null;
-    }
-
     public override void Render()
     {
+        if (!Settings.Enable) return;
+
         var labelHover = GameController.IngameState.IngameUi.ItemsOnGroundLabelElement.LabelOnHover;
         if (labelHover == null || labelHover.Type != ElementType.MiscGroundLabel) return;
 
         var hoverPath = GameController.IngameState.IngameUi.ItemsOnGroundLabelElement.ItemOnHoverPath;
-        if (!NPCDatabase.NPCDictionary.TryGetValue(hoverPath, out var npc)) return;
+        if (!NPCDatabase.TryGetNPC(hoverPath, out var npc)) return;
 
         DrawShortcuts(npc, labelHover);
     }
 
     private void DrawShortcuts(NPC npc, Element label)
     {
+        var actions = new List<string>(3);
+        if (!string.IsNullOrEmpty(npc.CtrlAction)) actions.Add("Ctrl: " + npc.CtrlAction);
+        if (!string.IsNullOrEmpty(npc.AltAction)) actions.Add("Alt: " + npc.AltAction);
+        if (!string.IsNullOrEmpty(npc.CtrlAltAction)) actions.Add("CtrlAlt: " + npc.CtrlAltAction);
+
+        if (actions.Count == 0) return;
+
+        var stringToDisplay = npc.Name + ": " + string.Join("   ", actions);
+
         var labelRect = label.GetClientRectCache;
-
-        var separator = "   ";
-        var stringToDisplay = string.Empty;
-
-        if (npc.Ctrl != null) stringToDisplay += "Ctrl: " + npc.Ctrl;
-        if (npc.Alt != null) stringToDisplay += separator + "Alt: " + npc.Alt;
-        if (npc.CtrlAlt != null) stringToDisplay += separator + "CtrlAlt: " + npc.CtrlAlt;
-
         var textSize = Graphics.MeasureText(stringToDisplay);
 
-
-        var boxPos = new Vector2(labelRect.Center.X - textSize.X / 2, labelRect.Top - textSize.Y - 5);
-        var boxSize = new Vector2(textSize.X, textSize.Y);
+        const float padding = 4;
+        var boxPos = new Vector2(labelRect.Center.X - textSize.X / 2 - padding, labelRect.Top - textSize.Y - 5 - padding);
+        var boxSize = new Vector2(textSize.X + padding * 2, textSize.Y + padding * 2);
 
         Graphics.DrawBox(new RectangleF(boxPos.X, boxPos.Y, boxSize.X, boxSize.Y), Color.Black);
-
-        var textPos = new Vector2(boxPos.X, boxPos.Y);
-        Graphics.DrawText(stringToDisplay, textPos, Settings.TextColor);
-    }
-
-
-    public override void EntityAdded(Entity entity)
-    {
+        Graphics.DrawText(stringToDisplay, new Vector2(boxPos.X + padding, boxPos.Y + padding), Settings.TextColor);
     }
 }

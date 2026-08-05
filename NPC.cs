@@ -1,9 +1,21 @@
+using System;
+
 namespace NPCShortcuts;
 
-public class NPC
+public sealed class NPC
 {
-    public string Name { get; set; }
-    public string Ctrl { get; set; }
-    public string Alt { get; set; }
-    public string CtrlAlt { get; set; }
+    public string Name { get; }
+    public string? CtrlAction { get; }
+    public string? AltAction { get; }
+    public string? CtrlAltAction { get; }
+
+    public NPC(string name, string? ctrlAction = null, string? altAction = null, string? ctrlAltAction = null)
+    {
+        Name = name ?? throw new ArgumentNullException(nameof(name));
+        CtrlAction = ctrlAction;
+        AltAction = altAction;
+        CtrlAltAction = ctrlAltAction;
+    }
+
+    public static NPC Vendor(string name) => new(name, "Sell", "Purchase");
 }
