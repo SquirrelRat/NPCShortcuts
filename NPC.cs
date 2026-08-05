@@ -17,5 +17,5 @@ public sealed class NPC
         CtrlAltAction = ctrlAltAction;
     }
 
-    public static NPC Vendor(string name) => new(name, "Sell", "Purchase");
+    public static NPC Vendor(string name) => new(name, "Sell", "Buy");
 }

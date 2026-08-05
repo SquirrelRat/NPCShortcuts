@@ -130,20 +130,20 @@ public static class NPCDatabase
             "Metadata/NPC/Epilogue/Helena", new NPC("Helena", "Hideout")
         },
         {
-            "Metadata/NPC/Epilogue/Kirac", new NPC("Commander Kirac", "Purchase", "Sell")
+            "Metadata/NPC/Epilogue/Kirac", new NPC("Commander Kirac", "Buy", "Sell")
         },
         // League mechanic areas
         {
             "Metadata/NPC/League/Sanctum/SanctumNPCAirlock", new NPC("Divinia", "Sell")
         },
         {
-            "Metadata/NPC/League/Sanctum/SanctumNPCMerchant", new NPC("Divinia", "Purchase")
+            "Metadata/NPC/League/Sanctum/SanctumNPCMerchant", new NPC("Divinia", "Buy")
         },
         {
-            "Metadata/NPC/League/Bestiary/EinharMenagerie", new NPC("Einhar, Beastmaster", "Bestiary", "Purchase", "Sell")
+            "Metadata/NPC/League/Bestiary/EinharMenagerie", new NPC("Einhar, Beastmaster", "Bestiary", "Buy", "Sell")
         },
         {
-            "Metadata/NPC/League/Delve/DelveMinerHub", new NPC("Niko, Master of the Depths", "Delve Chart", "Purchase")
+            "Metadata/NPC/League/Delve/DelveMinerHub", new NPC("Niko, Master of the Depths", "Delve Chart", "Buy")
         },
         // Hideout
         {
@@ -162,7 +162,7 @@ public static class NPCDatabase
             "Metadata/NPC/Epilogue/LillyHideout", new NPC("Lilly Roth", "Sell", "Gems", "Cards")
         },
         {
-            "Metadata/NPC/Epilogue/KiracHideout", new NPC("Commander Kirac", "Purchase", "Sell")
+            "Metadata/NPC/Epilogue/KiracHideout", new NPC("Commander Kirac", "Buy", "Sell")
         },
         {
             "Metadata/NPC/League/Betrayal/BetrayalNinjaCopHideout", new NPC("Jun, Veiled Master", "Unveil", "Syndicate", "Sell")
