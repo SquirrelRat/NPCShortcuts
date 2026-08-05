@@ -137,6 +137,9 @@ public static class NPCDatabase
             "Metadata/NPC/League/Sanctum/SanctumNPCAirlock", new NPC("Divinia", "Sell")
         },
         {
+            "Metadata/NPC/League/Sanctum/SanctumNPCMerchant", new NPC("Divinia", "Purchase")
+        },
+        {
             "Metadata/NPC/League/Bestiary/EinharMenagerie", new NPC("Einhar, Beastmaster", "Bestiary", "Purchase", "Sell")
         },
         {
