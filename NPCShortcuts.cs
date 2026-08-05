@@ -82,6 +82,8 @@ public class NPCShortcuts : BaseSettingsPlugin<NPCShortcutsSettings>
 
     private long _cacheEntityAddr;
     private LayoutData? _cacheLayout;
+    private float _separatorWidth = -1f;
+    private float _lineHeight;
 
     public override bool Initialise()
     {
@@ -99,16 +101,19 @@ public class NPCShortcuts : BaseSettingsPlugin<NPCShortcutsSettings>
         var entity = labelElement.ItemOnHover;
         if (entity == null) return;
 
-        var npcDat = entity.GetComponent<NPC>()?.NpcDat;
-        if (npcDat == null) return;
-
         if (_cacheEntityAddr != entity.Address)
         {
             _cacheEntityAddr = entity.Address;
-            var path = entity.Path;
-            var name = npcDat.Name ?? string.Empty;
-            var actions = ParseActions(npcDat);
-            _cacheLayout = BuildLayout(path, name, actions);
+            _cacheLayout = null;
+
+            var npcDat = entity.GetComponent<NPC>()?.NpcDat;
+            if (npcDat != null)
+            {
+                var path = entity.Path;
+                var name = npcDat.Name ?? string.Empty;
+                var actions = ParseActions(npcDat);
+                _cacheLayout = BuildLayout(path, name, actions);
+            }
         }
 
         if (_cacheLayout != null) DrawLayout(_cacheLayout, labelHover);
@@ -178,18 +183,31 @@ public class NPCShortcuts : BaseSettingsPlugin<NPCShortcutsSettings>
         return segments;
     }
 
+    private void EnsureMetrics()
+    {
+        if (_separatorWidth >= 0f) return;
+        _separatorWidth = Graphics.MeasureText(Separator).X;
+        _lineHeight = Graphics.MeasureText(Separator).Y;
+    }
+
     private LayoutData? BuildLayout(string entityPath, string npcName, List<string> actions)
     {
         var segments = BuildSegments(entityPath, npcName, actions);
         if (segments.Count == 0) return null;
 
-        var layout = new LayoutData();
-        layout.SeparatorWidth = Graphics.MeasureText(Separator).X;
-        layout.LineHeight = Graphics.MeasureText(Separator).Y;
+        EnsureMetrics();
+
+        var layout = new LayoutData
+        {
+            SeparatorWidth = _separatorWidth,
+            LineHeight = _lineHeight
+        };
 
         foreach (var (key, action) in segments)
         {
-            layout.KeyWidths.Add(Graphics.MeasureText(key + ": ").X);
+            var keyLabel = key + ": ";
+            layout.KeyLabels.Add(keyLabel);
+            layout.KeyWidths.Add(Graphics.MeasureText(keyLabel).X);
             layout.ActionWidths.Add(Graphics.MeasureText(action).X);
             layout.Segments.Add((key, action));
         }
@@ -207,13 +225,13 @@ public class NPCShortcuts : BaseSettingsPlugin<NPCShortcutsSettings>
         var boxPos = new Vector2(labelRect.Center.X - layout.TotalWidth / 2 - Padding, labelRect.Top - layout.LineHeight - TopOffset - Padding);
         var boxSize = new Vector2(layout.TotalWidth + Padding * 2, layout.LineHeight + Padding * 2);
 
-        Graphics.DrawBox(new RectangleF(boxPos.X, boxPos.Y, boxSize.X, boxSize.Y), Color.Black);
+        Graphics.DrawBox(new RectangleF(boxPos.X, boxPos.Y, boxSize.X, boxSize.Y), Settings.BackgroundColor);
 
         var x = boxPos.X + Padding;
         var y = boxPos.Y + Padding;
         for (var i = 0; i < layout.Segments.Count; i++)
         {
-            var keyLabel = layout.Segments[i].Key + ": ";
+            var keyLabel = layout.KeyLabels[i];
             Graphics.DrawText(keyLabel, new Vector2(x, y), Settings.TextColor);
             x += layout.KeyWidths[i];
 
@@ -243,6 +261,7 @@ public class NPCShortcuts : BaseSettingsPlugin<NPCShortcutsSettings>
     private sealed class LayoutData
     {
         public List<(string Key, string Action)> Segments { get; } = new();
+        public List<string> KeyLabels { get; } = new();
         public List<float> KeyWidths { get; } = new();
         public List<float> ActionWidths { get; } = new();
         public float SeparatorWidth;

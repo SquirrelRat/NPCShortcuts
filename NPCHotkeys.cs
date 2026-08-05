@@ -20,9 +20,9 @@ public static class NPCHotkeys
         ["Metadata/NPC/Epilogue/Kirac"] = new() { ["Buy"] = "Ctrl", ["Sell"] = "Alt", ["Atlas Respec"] = "CtrlAlt" },
         ["Metadata/NPC/Epilogue/KiracHideout"] = new() { ["Buy"] = "Ctrl", ["Sell"] = "Alt", ["Atlas Respec"] = "CtrlAlt" },
 
-        // Jun: hideout kept Ctrl=Unveil, town lost it in 3.26
+        // Jun: town and hideout both have Ctrl=Unveil
         ["Metadata/NPC/League/Betrayal/BetrayalNinjaCopHideout"] = new() { ["Unveil"] = "Ctrl", ["Investigation"] = "Alt", ["Sell"] = "CtrlAlt" },
-        ["Metadata/NPC/League/Betrayal/BetrayalNinjaCop"] = new() { ["Investigation"] = "Alt", ["Sell"] = "CtrlAlt" },
+        ["Metadata/NPC/League/Betrayal/BetrayalNinjaCop"] = new() { ["Unveil"] = "Ctrl", ["Investigation"] = "Alt", ["Sell"] = "CtrlAlt" },
 
         // Faustus: town (Currency/Gamble/Respec) vs hideout (Currency/Gamble/Manage Shop)
         ["Metadata/NPC/League/Kalguur/VillageFaustusTown"] = new() { ["Currency"] = "Ctrl", ["Gamble"] = "Alt", ["Respec"] = "CtrlAlt" },
@@ -62,6 +62,24 @@ public static class NPCHotkeys
         // Act 7
         ["Metadata/NPC/Act7/Helena"] = new() { ["Hideout"] = "Ctrl", ["Sell"] = "CtrlAlt" },
         ["Metadata/NPC/Act7/YeenaTown"] = new() { ["Sell"] = "Ctrl", ["Buy"] = "Alt", ["Identify"] = "CtrlAlt" },
+
+        // Act 8
+        ["Metadata/NPC/Act8/ClarissaTown"] = new() { ["Sell"] = "Ctrl", ["Buy"] = "Alt", ["Identify"] = "CtrlAlt" },
+        ["Metadata/NPC/Act8/Hargan"] = new() { ["Sell"] = "Ctrl", ["Buy"] = "Alt" },
+
+        // Act 9
+        ["Metadata/NPC/Act9/Irasha"] = new() { ["Sell"] = "Ctrl", ["Buy"] = "Alt" },
+        ["Metadata/NPC/Act9/PetarusVanja"] = new() { ["Sell"] = "Ctrl", ["Buy"] = "Alt", ["Identify"] = "CtrlAlt" },
+        ["Metadata/NPC/Act9/Tasuni"] = new() { ["Cards"] = "Ctrl" },
+
+        // Act 10
+        ["Metadata/NPC/Act10/Lani"] = new() { ["Sell"] = "Ctrl", ["Buy"] = "Alt", ["Identify"] = "CtrlAlt" },
+        ["Metadata/NPC/Act10/Weylam"] = new() { ["Sell"] = "Ctrl", ["Buy"] = "Alt" },
+
+        // Epilogue
+        ["Metadata/NPC/Epilogue/Lani"] = new() { ["Sell"] = "Ctrl", ["Buy"] = "Alt", ["Identify"] = "CtrlAlt" },
+        ["Metadata/NPC/Epilogue/Weylam"] = new() { ["Sell"] = "Ctrl", ["Buy"] = "Alt" },
+        ["Metadata/NPC/Epilogue/Helena"] = new() { ["Hideout"] = "Ctrl" },
 
         // Einhar Menagerie: Ctrl=Bestiary, Alt=Sell, CtrlAlt=Identify (hideout/town are Bestiary-only)
         ["Metadata/NPC/League/Bestiary/EinharMenagerie"] = new() { ["Bestiary"] = "Ctrl", ["Sell"] = "Alt", ["Identify"] = "CtrlAlt" },

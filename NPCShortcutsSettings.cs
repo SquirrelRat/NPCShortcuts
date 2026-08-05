@@ -11,4 +11,5 @@ public class NPCShortcutsSettings : ISettings
     public ColorNode SellColor { get; set; } = new ColorNode(Color.Red);
     public ColorNode BuyColor { get; set; } = new ColorNode(Color.LimeGreen);
     public ColorNode OtherActionColor { get; set; } = new ColorNode(Color.Aqua);
+    public ColorNode BackgroundColor { get; set; } = new ColorNode(new Color(0, 0, 0, 160));
 }
